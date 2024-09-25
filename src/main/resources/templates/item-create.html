@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>아이템 생성</title>
+</head>
+<body>
+<h1>새로운 아이템 추가</h1>
+<form th:action="@{/admin/items/create}" method="post">
+    <label for="itemName">아이템 이름:</label>
+    <input type="text" id="itemName" name="itemName" th:value="${item.itemName}"/>
+
+    <label for="color">색상:</label>
+    <input type="text" id="color" name="color" th:value="${item.color}"/>
+
+    <button type="submit">추가</button>
+</form>
+</body>
+</html>
