@@ -1,13 +1,14 @@
 package ac.kopo.kr.realglowadmin.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "item")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Setter
+@Table(name = "item")
 public class Item {
 
     @Id

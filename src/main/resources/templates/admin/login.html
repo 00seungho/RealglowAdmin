@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>로그인</title>
-</head>
+
 <body>
-<form th:action="@{/login}" method="post">
+<form th:action="@{/admin/login}" method="post">
     <div>
         <label for="username">아이디:</label>
         <input type="text" id="username" name="username"/>
@@ -15,5 +15,15 @@
     </div>
     <button type="submit">로그인</button>
 </form>
+<script type="text/javascript">
+    const loginError = '[[${loginError}]]';
+
+    window.onload = function() {
+        if (loginError) {
+            alert(loginError); // 오류 메시지 표시
+        }
+    };
+</script>
+</head>
 </body>
 </html>

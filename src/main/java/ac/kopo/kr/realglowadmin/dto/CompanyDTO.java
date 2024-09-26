@@ -1,19 +1,15 @@
 package ac.kopo.kr.realglowadmin.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyDTO {
 
     private Integer id;
     private String name;
 
-    public CompanyDTO() {}
-
-    public CompanyDTO(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }

@@ -18,11 +18,12 @@ public class AdminService {
 
     // AdminDTO를 Admin 엔티티로 변환
     public Admin dtoToEntity(AdminDTO adminDTO) {
-        Admin admin = new Admin();
-        admin.setId(adminDTO.getId());
-        admin.setUsername(adminDTO.getUsername());
-        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword())); // 비밀번호 암호화
-        admin.setRole(adminDTO.getRole());
+        Admin admin = Admin.builder()
+                .id(adminDTO.getId())
+                .username(adminDTO.getUsername())
+                .password(passwordEncoder.encode(adminDTO.getPassword()))
+                .role(adminDTO.getRole())
+                .build();
         return admin;
     }
 
@@ -37,10 +38,6 @@ public class AdminService {
     }
 
     public Admin findByUsername(String username) {
-        Admin admin = adminRepository.findByUsername(username);
-        if (admin != null) {
-            return admin;
-        }
-        return null;
+        return adminRepository.findByUsername(username);
     }
 }

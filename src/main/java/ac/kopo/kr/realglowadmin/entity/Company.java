@@ -1,13 +1,14 @@
 package ac.kopo.kr.realglowadmin.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "company", uniqueConstraints = {@UniqueConstraint(columnNames = "NAME")})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Setter
+@Table(name = "company")
 public class Company {
 
     @Id

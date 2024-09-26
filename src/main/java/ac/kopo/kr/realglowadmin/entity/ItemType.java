@@ -1,13 +1,14 @@
 package ac.kopo.kr.realglowadmin.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "itemtype", uniqueConstraints = {@UniqueConstraint(columnNames = "TYPE_NAME")})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Setter
+@Table(name = "itemtype")
 public class ItemType {
 
     @Id
