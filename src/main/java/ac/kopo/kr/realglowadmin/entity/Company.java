@@ -16,6 +16,14 @@ public class Company {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
+
+    //회사명 변경
+    public void changeName(String name){
+        this.name = name;
+    }
+
+
+
 }

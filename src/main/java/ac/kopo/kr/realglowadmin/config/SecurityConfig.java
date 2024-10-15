@@ -44,13 +44,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/register", "/admin/login").permitAll() // 회원가입 및 로그인 페이지 접근 허용
+                        .requestMatchers("/Auth/login", "/admin/login").permitAll() // 회원가입 및 로그인 페이지 접근 허용
                         .requestMatchers("/admin/**").authenticated() // 기타 admin URL은 인증 필요
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/admin/login") // 로그인 페이지 설정
-                        .defaultSuccessUrl("/admin/management", true) // 로그인 성공 시 리다이렉트
+                        .defaultSuccessUrl("/admin/realglow/list", true) // 로그인 성공 시 리다이렉트
                         .permitAll()
                 )
                 .logout(logout -> logout

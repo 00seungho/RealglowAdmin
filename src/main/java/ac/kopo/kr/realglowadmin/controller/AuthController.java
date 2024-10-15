@@ -1,9 +1,5 @@
 package ac.kopo.kr.realglowadmin.controller;
 
-import ac.kopo.kr.realglowadmin.dto.AdminDTO;
-import ac.kopo.kr.realglowadmin.dto.ItemDTO;
-import ac.kopo.kr.realglowadmin.dto.PageRequestDTO;
-import ac.kopo.kr.realglowadmin.entity.Item;
 import ac.kopo.kr.realglowadmin.service.AdminService;
 import ac.kopo.kr.realglowadmin.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,54 +9,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
-
+@RequestMapping("/Auth")
+public class AuthController {
     @Autowired
     private AdminService adminService;
+    @Autowired
     private ItemService itemService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("itemDTO", new ItemDTO());
-        return "/admin/item/item-create";
-    }
 
-    @PostMapping("/create")
-    public String createItem(@ModelAttribute("itemDTO") ItemDTO itemDTO) {
-        Item item = itemService.dtoToEntity(itemDTO);
-        itemService.saveItem(item);
-        return "redirect:/admin/item/management";
-    }
-
-    @GetMapping("/management")
-    public String listItems(PageRequestDTO pageRequestDTO, Model model) {
-        model.addAttribute("result", itemService.getList(pageRequestDTO));
-        return "/admin/item/item-management";
-    }
-
-
-
-    @GetMapping("/register")
-    public String viewRegisterPage(Model model) {
-        model.addAttribute("adminDTO", new AdminDTO()); // 빈 AdminDTO를 모델에 추가
-        return "/admin/register"; // 회원가입 페이지
-    }
-
-    @PostMapping("/register")
-    public String registerAdmin(@ModelAttribute AdminDTO adminDTO) {
-        adminService.saveAdmin(adminDTO); // Admin 저장
-        return "redirect:/admin/login"; // 등록 후 로그인 페이지로 리다이렉트
+    @GetMapping("/")
+    public String redirectToLogin() {
+        // "/" 경로로 들어오면 "/login" 페이지로 리다이렉트
+        return "redirect:/Auth/login";
     }
 
     @GetMapping("/login")
     public String viewProfile() {
-        return "/admin/login";
+        return "/login";
     }
 
     @PostMapping("/login")
@@ -74,14 +47,13 @@ public class AdminController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 인증 성공 후 관리 페이지로 리다이렉트
-            System.out.println("성공");
-            return "redirect:/admin/management";
+            return "redirect:/admin/ItemList/list";
 
         } catch (Exception e) {
             // 인증 실패 시 에러 메시지와 함께 다시 로그인 페이지로
             String msg = "Invalid username or password.";
             model.addAttribute("loginError", msg);  // 에러 메시지 설정
-            return "/admin/login";
+            return "/login";
         }
 
 

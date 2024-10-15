@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDTO {
-
     private Integer id;
     private String itemName;
     private String color;
@@ -17,3 +16,5 @@ public class ItemDTO {
     private CompanyDTO companyDTO;
     private String link;
 }
+
+

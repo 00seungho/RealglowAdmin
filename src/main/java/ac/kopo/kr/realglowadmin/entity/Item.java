@@ -35,4 +35,25 @@ public class Item {
 
     @Column(name = "LINK")
     private String link;
+
+    //    변경된 아이템이름 수정
+    public void changeItemName(String ItemName){
+        this.itemName = ItemName;
+    }
+
+    //    변경된 색상이름으로 수정
+    public void changeColorName(String colorName){
+        this.colorName = colorName;
+    }
+
+    //    변경된 색상으로 수정
+    public void changeColor(String color){
+        this.color = color;
+    }
+
+    public void changeLink(String link){
+        this.link = link;
+    }
+
 }
+
