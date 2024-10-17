@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ItemTypeDTO {
 
-    private Integer id;
+    private Long id;
     private String typeName;
 
 }

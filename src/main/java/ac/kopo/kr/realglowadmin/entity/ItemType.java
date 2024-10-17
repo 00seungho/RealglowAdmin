@@ -13,7 +13,7 @@ public class ItemType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
     @Column(name = "TYPE_NAME", nullable = false,unique = true)
     private String typeName;

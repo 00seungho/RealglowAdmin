@@ -3,7 +3,7 @@
     <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
         <th:block th:fragment="content">
             <h1 class="mt-4">Register Page</h1>
-            <form th:action="@{/templates/admin/ItemList/register}" th:method="post">
+            <form th:action="@{/admin/ItemList/register}" th:method="post">
                 <div class="form-group">
                     <label>ItemName:</label>
                     <input type="text" name="ItemName" placeholder="Enter ItemName" class="form-control">
@@ -18,11 +18,23 @@
                 </div>
                 <div class="form-group">
                     <label>ItemType:</label>
-                    <input type="text" name="ItemType" placeholder="Enter ItemType" class="form-control">
+                    <select name="itemTypeId" class="form-control">
+                        <option value="">Select ItemType</option>
+                        <option th:each="itemType : ${itemTypeDTOList}"
+                                th:value="${itemType.id}"
+                                th:text="${itemType.typeName}"> <!-- name 필드는 실제 ItemType의 이름 속성으로 변경 -->
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>CompanyName:</label>
-                    <input type="text" name="CompanyName" placeholder="Enter CompanyName" class="form-control">
+                    <label>Company:</label>
+                    <select name="companyId" class="form-control">
+                        <option value="">Select Company</option>
+                        <option th:each="company : ${companyDTOList}"
+                                th:value="${company.id}"
+                                th:text="${company.name}"> <!-- name 필드는 실제 Company의 이름 속성으로 변경 -->
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Link:</label>

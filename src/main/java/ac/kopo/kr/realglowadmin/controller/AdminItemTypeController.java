@@ -1,6 +1,7 @@
 package ac.kopo.kr.realglowadmin.controller;
 
 import ac.kopo.kr.realglowadmin.dto.ItemDTO;
+import ac.kopo.kr.realglowadmin.dto.ItemTypeDTO;
 import ac.kopo.kr.realglowadmin.dto.PageRequestDTO;
 import ac.kopo.kr.realglowadmin.service.AdminService;
 import ac.kopo.kr.realglowadmin.service.ItemService;
@@ -25,9 +26,14 @@ public class AdminItemTypeController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @GetMapping("/")
+    public String redirectItemTypeList() {
+        return "redirect:/admin/ItemType/list";
+    }
+
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
-        model.addAttribute("result", itemService.getList(pageRequestDTO));
+        model.addAttribute("result", itemService.getItemTypeList(pageRequestDTO));
     }
 
     @GetMapping("/register")
@@ -36,27 +42,24 @@ public class AdminItemTypeController {
     }
 
     @PostMapping("/register")
-    public String registerPost(ItemDTO dto, RedirectAttributes redirectAttributes){
-        ItemDTO itemDTO = ItemDTO.builder()
-                .itemName(dto.getItemName())
-                .color(dto.getColor())
-                .colorName(dto.getColorName())
-                .itemtypeDTO(dto.getItemtypeDTO())
-                .companyDTO(dto.getCompanyDTO())
-                .link(dto.getLink())
+    public String registerPost(ItemTypeDTO dto, RedirectAttributes redirectAttributes){
+        ItemTypeDTO itemTypeDTO = ItemTypeDTO.builder()
+                .typeName(dto.getTypeName())
                 .build();
-        Integer id = itemService.register(itemDTO);
-        redirectAttributes.addFlashAttribute("msg", id);
+        Long id = itemService.register(itemTypeDTO);
+
+        String msg = dto.getTypeName()+" 카테고리가 등록되었습니다.";
+        redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/admin/ItemType/list";
     }
     @GetMapping({"/read", "/modify"})
-    public void read(Integer id, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
-        ItemDTO dto = itemService.get(id);
+    public void read(Long id, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
+        ItemTypeDTO dto = itemService.getItemType(id);
         model.addAttribute("dto", dto);
     }
 
     @PostMapping("/modify")
-    public String modify(ItemDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+    public String modify(ItemTypeDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
         itemService.modify(dto);
         redirectAttributes.addAttribute("page", requestDTO.getPage());
         redirectAttributes.addAttribute("id", dto.getId());
@@ -65,9 +68,19 @@ public class AdminItemTypeController {
         return "redirect:/admin/ItemType/read";
     }
     @PostMapping("/remove")
-    public String remove(Integer id, RedirectAttributes redirectAttributes){
-        itemService.remove_item(id);
-        redirectAttributes.addFlashAttribute("msg",id);
+    public String remove(Long id, RedirectAttributes redirectAttributes){
+        String itemTypeName = itemService.getItemType(id).getTypeName();
+        itemService.remove_ItemType(id);
+        boolean is_remove = itemService.remove_Company(id);
+
+        String msg = "";
+        if (is_remove){
+            msg = itemTypeName+" 카테고리가 삭제되었습니다.";
+        }
+        else{
+            msg = itemTypeName+" 카테고리가 삭제되지 못했습니다. \n해당 카테고리로 등록되어있는 아이템을 먼저 삭제해 주세요.";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
         return "redirect:/admin/ItemType/list";
     }
 

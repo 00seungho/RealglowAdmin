@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/Auth")
+@RequestMapping("/")
 public class MainController {
     @Autowired
     private AdminService adminService;
@@ -28,7 +28,7 @@ public class MainController {
     @GetMapping("/")
     public String redirectToLogin() {
         // "/" 경로로 들어오면 "/login" 페이지로 리다이렉트
-        return "redirect:/Auth/login";
+        return "redirect:/Notice/list";
     }
 
 }

@@ -16,7 +16,7 @@
                     <input type="text" name="Color" class="form-control" th:value="${dto.Color}" readonly>
                 </div>
             <div class="form-group">
-                <label>colorName:</label>
+                <label>ColorName:</label>
                 <input type="text" name="colorName" class="form-control" th:value="${dto.colorName}" readonly>
             </div>
             <div class="form-group">
@@ -31,10 +31,10 @@
                 <label>Link:</label>
                 <input type="text" name="Link" class="form-control" th:value="${dto.link}" readonly>
             </div>
-            <a th:href="@{/templates/admin/ItemList/modify(id=${dto.id}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+            <a th:href="@{/admin/ItemList/modify(id=${dto.id}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
                 <button type="button" class="btn btn-primary form-group">Modify</button>
             </a>
-            <a th:href="@{/templates/admin/ItemList/list(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+            <a th:href="@{/admin/ItemList/list(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
                 <button type="button" class="btn btn-info form-group">List</button>
             </a>
         </th:block>

@@ -9,23 +9,21 @@
 
     <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
         <th:block th:fragment="content">
-            <h1 class="mt-4">Item List Page
+            <h1 class="mt-4">ItemType List Page
                 <span>
-                    <a th:href="@{/admin/ItemList/register}">
+                    <a th:href="@{/admin/ItemType/register}">
                         <button type="button" class="btn btn-outline-primary">Register</button>
                     </a>
                 </span>
             </h1>
             <!--  검색 타입과 검색어를 입력할 수 있는 화면 구성 Start  -->
-            <form action="/admin/list" method="get" id="searchForm">
+            <form action="/board/list" method="get" id="searchForm">
                 <div class="input-group">
                     <input type="hidden" name="page" value="1">
                     <div class="input-group-prepend">
                         <select name="type" class="form-select">
                             <option th:selected="${pageRequestDTO.type == null}">검색 종류가 선택되지 않음</option>
-                            <option th:selected="${pageRequestDTO.type == 'c'}" value="c">회사명</option>
-                            <option th:selected="${pageRequestDTO.type == 'i'}" value="i">아이템명</option>
-                            <option th:selected="${pageRequestDTO.type == 'o'}" value="o">색상명</option>
+                            <option th:selected="${pageRequestDTO.type == 'i'}" value="i">아이템타입</option>
                         </select>
                     </div>
                     <input class="form-control" type="text" name="keyword" th:value="${pageRequestDTO.keyword}">
@@ -39,46 +37,36 @@
                 <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">ItemName</th>
-                    <th scope="col">Color</th>
-                    <th scope="col">colorName</th>
                     <th scope="col">ItemType</th>
-                    <th scope="col">CompanyName</th>
-                    <th scope="col">Link</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="dto : ${result.dtoList}">
                     <th scope="row">[[${dto.id}]]</th>
                     <td>
-                        <a th:href="@{/admin/ItemList/read(id=${dto.id}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-                            [[${dto.itemName}]]
+                        <a th:href="@{/admin/ItemType/read(id=${dto.id}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                            [[${dto.typeName}]]
                         </a>
                     </td>
-                    <td>
-                        <div th:style="'width: 23px; height: 23px; background-color: ' + ${dto.color} + '; border: 1px solid #000; display: inline-block;'" title="${dto.color}"></div>
-                    </td>
-                    <td>[[${dto.colorName}]]</td>
-                    <td>[[${dto.itemtypeDTO.typeName}]]</td>
-                    <td>[[${dto.companyDTO.name}]]</td>
-                    <td>[[${dto.link}]]</td>
                 </tr>
                 </tbody>
             </table>
             <ul class="pagination h-100 justify-content-center align-items-center">
                 <li class="page-item" th:if="${result.prev}">
-                    <a class="page-link" th:href="@{/admin/ItemList/list(page=${result.start -1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
+                    <a class="page-link" th:href="@{/admin/ItemType/list(page=${result.start -1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
                 </li>
                 <li th:class="'page-item ' + ${result.page == page?'active':''}" th:each="page : ${result.pageList}">
-                    <a class="page-link" th:href="@{/admin/ItemList/list(page=${page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                    <a class="page-link" th:href="@{/admin/ItemType/list(page=${page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
                 </li>
                 <li class="page-item" th:if="${result.next}">
-                    <a class="page-link" th:href="@{/admin/ItemList/list(page=${result.end + 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
+                    <a class="page-link" th:href="@{/admin/ItemType/list(page=${result.end + 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
                 </li>
             </ul>
         </th:block>
     </th:block>
 <!--모달창 구현-->
-    <div th:replace="~{/layout/basic :: modalFragment(${msg})}"></div>
+<div th:replace="~{/layout/basic :: modalFragment(${msg})}"></div>
+
+
 
 </html>

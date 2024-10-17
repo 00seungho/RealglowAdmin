@@ -32,10 +32,8 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String viewProfile() {
-        return "/login";
+    public void viewProfile() {
     }
-
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         try {
@@ -53,7 +51,7 @@ public class AuthController {
             // 인증 실패 시 에러 메시지와 함께 다시 로그인 페이지로
             String msg = "Invalid username or password.";
             model.addAttribute("loginError", msg);  // 에러 메시지 설정
-            return "/login";
+            return "redirect:/Auth/login";
         }
 
 

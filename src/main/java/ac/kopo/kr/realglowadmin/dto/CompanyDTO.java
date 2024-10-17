@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyDTO {
-    private Integer id;
+    private Long id;
     private String name;
 }

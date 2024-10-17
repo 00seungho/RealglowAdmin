@@ -14,7 +14,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
     @Column(name = "ITEMNAME")
     private String itemName;
@@ -53,6 +53,14 @@ public class Item {
 
     public void changeLink(String link){
         this.link = link;
+    }
+
+    public void changeCompany(Company company){
+        this.company = company;
+    }
+
+    public void changeItemType(ItemType itemType){
+        this.itemType = itemType;
     }
 
 }

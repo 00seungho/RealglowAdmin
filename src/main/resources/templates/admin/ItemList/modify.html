@@ -4,34 +4,53 @@
     <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
         <th:block th:fragment="content">
             <h1 class="mt-4">Modify Page</h1>
-            <form action="/guestbook/modify" method="post">
+            <form action="/admin/ItemList/modify" method="post">
                 <input type="hidden" name="page" th:value="${requestDTO.page}">
                 <input type="hidden" name="type" th:value="${requestDTO.type}">
                 <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
                 <div class="form-group">
-                    <label>Gno:</label>
-                    <input type="text" name="bno" class="form-control" th:value="${dto.bno}" readonly>
+                    <label>Id:</label>
+                    <input type="text" name="id" class="form-control" th:value="${dto.id}" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Title:</label>
-                    <input type="text" name="title" class="form-control" th:value="${dto.title}">
+                    <label>ItemName:</label>
+                    <input type="text" name="itemName" class="form-control" th:value="${dto.itemName}">
                 </div>
                 <div class="form-group">
-                    <label>Content:</label>
-                    <textarea name="content" rows="5" class="form-control">[[${dto.content}]]</textarea>
+                    <label>Color:</label>
+                    <input type="text" name="color" class="form-control" th:value="${dto.color}">
                 </div>
                 <div class="form-group">
-                    <label>Writer:</label>
-                    <input type="text" name="writer" class="form-control" th:value="${dto.writerName}" readonly>
+                    <label>ColorName:</label>
+                    <input type="text" name="colorName" class="form-control" th:value="${dto.colorName}">
                 </div>
                 <div class="form-group">
-                    <label>RegDate:</label>
-                    <input type="text" name="regDate" class="form-control" th:value="${dto.regDate}" readonly>
+                    <label>ItemType:</label>
+                    <select name="itemTypeId" class="form-control">
+                        <option value="">Select ItemType</option>
+                        <option th:each="itemType : ${itemTypeDTOList}"
+                                th:value="${itemType.id}"
+                                th:text="${itemType.typeName}"
+                                th:selected="${itemType.id == dto.itemtypeDTO.id}"> <!-- 선택 조건 설정 -->
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>ModifyDate:</label>
-                    <input type="text" name="modDate" class="form-control" th:value="${dto.modDate}" readonly>
+                    <label>Company:</label>
+                    <select name="companyId" class="form-control">
+                        <option value="">Select Company</option>
+                        <option th:each="company : ${companyDTOList}"
+                                th:value="${company.id}"
+                                th:text="${company.name}"
+                                th:selected="${company.id == dto.companyDTO.id}">
+                        </option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label>Link:</label>
+                    <input type="text" name="Link" class="form-control" th:value="${dto.link}">
+                </div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             </form>
                 <button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
@@ -43,13 +62,13 @@
     <script th:inline="javascript">
         let actionForm = $("form");
         $(".removeBtn").click(function () {
-            actionForm.attr("action", "/board/remove")
+            actionForm.attr("action", "/admin/ItemList/remove")
                 .attr("method", "post")
                 .submit()
         });
 
         $(".modifyBtn").click(function () {
-            actionForm.attr("action", "/board/modify")
+            actionForm.attr("action", "/admin/ItemList/modify")
                 .attr("method", "post")
                 .submit()
         });
@@ -65,7 +84,7 @@
             actionForm.append(type);
             actionForm.append(keyword);
 
-            actionForm.attr("action", "/board/list")
+            actionForm.attr("action", "/admin/ItemList/list")
                 .attr("method", "get")
                 .submit()
         });

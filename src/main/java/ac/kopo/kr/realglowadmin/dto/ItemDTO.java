@@ -8,13 +8,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDTO {
-    private Integer id;
+    private Long id;
     private String itemName;
     private String color;
     private String colorName;
     private ItemTypeDTO itemtypeDTO;
     private CompanyDTO companyDTO;
     private String link;
+
 }
 
 
