@@ -59,6 +59,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named('jar') {
+    manifest {
+        attributes(
+                'Main-Class': 'ac.kopo.kr.realglowadmin.RealglowAdminApplication'
+        )
+    }
+}
+
 sourceSets {
     main {
         java {
