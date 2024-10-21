@@ -32,7 +32,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -60,12 +59,9 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('bootJar') {
-    manifest {
-        attributes(
-                'Main-Class': 'ac.kopo.kr.realglowadmin.RealglowAdminApplication'
-        )
-    }
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-parameters']
 }
 
 sourceSets {
