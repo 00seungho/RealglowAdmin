@@ -3,8 +3,8 @@ package ac.kopo.kr.realglowadmin.service;
 import ac.kopo.kr.realglowadmin.dto.*;
 import ac.kopo.kr.realglowadmin.entity.*;
 import ac.kopo.kr.realglowadmin.repository.*;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,6 @@ public class ItemService {
     private NoticeRepository noticeRepository;
     @Autowired
     private AdminRepository adminRepository;
-
     public Item dtoToEntity(ItemDTO itemDTO) {
         Item item = Item.builder()
                 .itemName(itemDTO.getItemName())
@@ -96,22 +95,17 @@ public class ItemService {
     }
 
     public PageResultDTO<ItemDTO, Item> getItemList(PageRequestDTO pageRequestDTO) {
-        // Function to convert Item to ItemDTO
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("id").descending());
         Function<Item, ItemDTO> fn = item -> entityToDTO(item); // Item에서 DTO로 변환
-
-        // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
-        Page<Item> result = itemRepository.getItemsWithDetails(pageRequestDTO.getPageable(Sort.by("id").descending()));
-
-        // PageResultDTO를 반환
+        Page<Item> result = itemRepository.searchPage(pageRequestDTO.getType(),pageRequestDTO.getKeyword(),pageable);
         return new PageResultDTO<>(result, fn);
     }
 
     public PageResultDTO<NoticeDTO, Notice> getNoticeList(PageRequestDTO pageRequestDTO) {
-        // Function to convert Item to ItemDTO
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("id").descending());
         Function<Notice, NoticeDTO> fn = notice -> entityToDTO(notice); // Item에서 DTO로 변환
-
         // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
-        Page<Notice> result = noticeRepository.getNoticesWithDetails(pageRequestDTO.getPageable(Sort.by("id").descending()));
+        Page<Notice> result = noticeRepository.searchPage(pageRequestDTO.getType(),pageRequestDTO.getKeyword(),pageable);
 
         // PageResultDTO를 반환
         return new PageResultDTO<>(result, fn);
@@ -119,36 +113,38 @@ public class ItemService {
 
     public PageResultDTO<CompanyDTO, Company> getCompanyList(PageRequestDTO pageRequestDTO) {
         // Function to convert Item to ItemDTO
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("id").descending());
+        String keyword = pageRequestDTO.getKeyword();
+        Page<Company> result;
+        if(keyword == null || keyword.isEmpty()) {
+            result = companyRepository.getCompanysWithDetails(pageable);
+        }
+        else{
+            result = companyRepository.findByNameContaining(keyword,pageable);
+        }
         Function<Company, CompanyDTO> fn = company -> entityToDTO(company); // Item에서 DTO로 변환
-
-        // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
-        Page<Company> result = companyRepository.getCompanysWithDetails(pageRequestDTO.getPageable(Sort.by("id").descending()));
-
-        // PageResultDTO를 반환
         return new PageResultDTO<>(result, fn);
     }
 
     public PageResultDTO<ItemTypeDTO, ItemType> getItemTypeList(PageRequestDTO pageRequestDTO) {
-        // Function to convert Item to ItemDTO
+        // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("id").descending());
+        Page<ItemType> result;
+        if(keyword == null || keyword.isEmpty()) {
+            result = itemTypeRepository.getItemTypesWithDetails(pageable);
+        }
+        else{
+            result = itemTypeRepository.findByTypeNameContaining(keyword,pageable);
+        }
         Function<ItemType, ItemTypeDTO> fn = itemType -> entityToDTO(itemType); // Item에서 DTO로 변환
 
-        // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
-        Page<ItemType> result = itemTypeRepository.getItemTypesWithDetails(pageRequestDTO.getPageable(Sort.by("id").descending()));
+
 
         // PageResultDTO를 반환
         return new PageResultDTO<>(result, fn);
     }
 
-    public PageResultDTO<ItemTypeDTO, ItemType> getItemTypesWithDetails(PageRequestDTO pageRequestDTO) {
-        // Function to convert Item to ItemDTO
-        Function<ItemType, ItemTypeDTO> fn = itemType -> entityToDTO(itemType); // Item에서 DTO로 변환
-
-        // PageRequestDTO로 페이징 정보 설정, 정렬 기준은 'id' 내림차순
-        Page<ItemType> result = itemTypeRepository.getItemTypesWithDetails(pageRequestDTO.getPageable(Sort.by("id").descending()));
-
-        // PageResultDTO를 반환
-        return new PageResultDTO<>(result, fn);
-    }
 
     public ItemType dtoToEntity(ItemTypeDTO itemTypeDTO) {
         ItemType itemType = ItemType

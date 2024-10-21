@@ -22,15 +22,18 @@
                     <input type="hidden" name="page" value="1">
                     <div class="input-group-prepend">
                         <select name="type" class="form-select">
-                            <option th:selected="${pageRequestDTO.type == null}">검색 종류가 선택되지 않음</option>
+                            <option th:selected="${pageRequestDTO.type == null}" value="">검색 종류가 선택되지 않음</option>
                             <option th:selected="${pageRequestDTO.type == 't'}" value="t">제목</option>
                             <option th:selected="${pageRequestDTO.type == 'c'}" value="c">내용</option>
                             <option th:selected="${pageRequestDTO.type == 'w'}" value="w">작성자</option>
+                            <option th:selected="${pageRequestDTO.type == 'tw'}" value="tw">제목+작성자</option>
+                            <option th:selected="${pageRequestDTO.type == 'tc'}" value="tc">제목+내용</option>
+                            <option th:selected="${pageRequestDTO.type == 'tcw'}" value="tcw">전체</option>
                         </select>
                     </div>
                     <input class="form-control" type="text" name="keyword" th:value="${pageRequestDTO.keyword}">
                     <div class="input-group-prepend">
-                        <button type="button" class="btn btn-secondary shadow-sm px-4">Search</button>
+                        <button type="submit" class="btn btn-secondary shadow-sm px-4">Search</button>
                     </div>
                 </div>
             </form>

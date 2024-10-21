@@ -17,18 +17,18 @@
                 </span>
             </h1>
             <!--  검색 타입과 검색어를 입력할 수 있는 화면 구성 Start  -->
-            <form action="/board/list" method="get" id="searchForm">
+            <form action="/admin/ItemType/list" method="get" id="searchForm">
                 <div class="input-group">
                     <input type="hidden" name="page" value="1">
                     <div class="input-group-prepend">
                         <select name="type" class="form-select">
-                            <option th:selected="${pageRequestDTO.type == null}">검색 종류가 선택되지 않음</option>
+                            <option th:selected="${pageRequestDTO.type == null}" value="">검색 종류가 선택되지 않음</option>
                             <option th:selected="${pageRequestDTO.type == 'i'}" value="i">아이템타입</option>
                         </select>
                     </div>
                     <input class="form-control" type="text" name="keyword" th:value="${pageRequestDTO.keyword}">
                     <div class="input-group-prepend">
-                        <button type="button" class="btn btn-secondary shadow-sm px-4">Search</button>
+                        <button type="submit" class="btn btn-secondary shadow-sm px-4">Search</button>
                     </div>
                 </div>
             </form>

@@ -1,6 +1,7 @@
 package ac.kopo.kr.realglowadmin.repository;
 
 import ac.kopo.kr.realglowadmin.entity.Item;
+import ac.kopo.kr.realglowadmin.repository.search.SearchItemRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, SearchItemRepository {
     @Query("select i from Item i where i.id = :id")
     Item getItemWithDetails(@Param("id") Long id);
 
