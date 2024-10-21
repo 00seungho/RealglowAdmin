@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
-    <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
         <th:block th:fragment="content">
             <h1 class="mt-4">Company List Page
                 <span>
@@ -64,7 +64,7 @@
         </th:block>
     </th:block>
     <!--모달창 구현-->
-    <div th:replace="~{/layout/basic :: modalFragment(${msg})}"></div>
+    <div th:replace="~{layout/basic :: modalFragment(${msg})}"></div>
 
 
 

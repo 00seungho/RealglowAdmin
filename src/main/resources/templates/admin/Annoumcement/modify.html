@@ -3,7 +3,7 @@
 <meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
         <th:block th:fragment="content">
             <h1 class="mt-4">Modify Page</h1>
             <form action="/admin/Annoumcement/modify" method="post">
