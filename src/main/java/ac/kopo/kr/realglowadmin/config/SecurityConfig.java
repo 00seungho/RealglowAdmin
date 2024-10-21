@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -50,7 +51,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/Auth/login") // 로그인 페이지 설정
-                        .defaultSuccessUrl("/", true) // 로그인 성공 시 리다이렉트
+                        .successHandler(new SavedRequestAwareAuthenticationSuccessHandler()) // 이전 페이지로 리다이렉트
                         .permitAll()
                 )
                 .logout(logout -> logout
