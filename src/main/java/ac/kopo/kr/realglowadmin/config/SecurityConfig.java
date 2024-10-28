@@ -56,7 +56,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/Auth/logout") // 로그아웃 URL 설정
-                        .logoutSuccessUrl("/") // 로그아웃 성공 후 리다이렉트
+                        .logoutSuccessUrl("/Auth/login") // 로그아웃 성공 후 리다이렉트
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
